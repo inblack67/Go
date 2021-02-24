@@ -1,4 +1,4 @@
-package main
+package structs
 
 import (
 	"fmt"
@@ -13,12 +13,15 @@ type Person struct{
 	password string
 }
 
-// type person struct{
-// 	name string
-// 	email string
-// 	username string
-// 	password string
-// }
+
+type extinct struct {
+	isExtinct bool
+}
+
+type deno struct {
+	extinct	// composition => deno has a char of extinct
+	carnivore bool
+}
 
 // shorthand
 type person struct{
@@ -37,6 +40,24 @@ func (p *person) own() string{
 }
 
 func main(){
+
+	// value types => unlike maps and slices => but you can always use & for ref
+
+	st1 := Person{
+		name: "somename",
+		email: "someemail",
+		username: "someusername",
+		password: "somepassword",
+	}
+
+	st2 := st1
+
+	st2.username = "hacked"
+
+	fmt.Println("st1.username = ", st1.username)
+	fmt.Println("st2.username = ", st2.username)
+	fmt.Println("st1.username = ", st1.username)
+
 	p1 := person{name:"test",email:"test@test.com", username:"someuser",password:"123"}
 
 	fmt.Println(p1.email)
@@ -49,4 +70,13 @@ func main(){
 	fmt.Println(strconv.Itoa(2))	// to string
 
 	fmt.Println(p1.own())
+
+	// no inheritence in go but composition
+	trex := deno{
+		extinct: extinct{
+			isExtinct: true,
+		},
+		carnivore: true,
+	}
+	fmt.Println("trex = ", trex)
 }

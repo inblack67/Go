@@ -1,76 +1,82 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
+// Person is
+type Person struct{
+	name string
+	email string
+	username string
+	password string
+}
+
+
+type extinct struct {
+	isExtinct bool
+}
+
+type deno struct {
+	extinct	// composition => deno has a char of extinct
+	carnivore bool
+}
+
+// shorthand
+type person struct{
+	name, email, password, username string
+}
+
+// similar to this
+func (p person) greet() string{
+	return "hello " + p.username
+}
+
+// changes defaults
+func (p *person) own() string{
+	p.username = "owned"
+	return "your username is " +  p.username
+}
 
 func main(){
-	// map => key value pairs => types of key/value has to be consistent
-	// order of the map's kvs is not guranteed in the o/p
-	chess := map[string]int{
-		"a1": 1,
-		"b1": 2,
-		"c1": 3,
-		"c4": 4,
-		"c5": 5,
-		"c6": 6,
-	}
-	// maps, slices and funcs not allowed as map keys
-	fmt.Println(chess)
 
-	makeChess := make(map[string]int)
-	makeChess = map[string]int{
-		"a1": 1,
-		"b1": 2,
-		"c1": 3,
-		"c4": 4,
-		"c5": 5,
-		"c6": 6,
-	}
-	fmt.Println("a1 = ", makeChess["a1"])
-	fmt.Println("a1 = ", makeChess["notpresent"])	// 0
+	// value types => unlike maps and slices => but you can always use & for ref
 
-	const key = "a1"
-
-	// interrogate map like this:-
-	value, ok := makeChess[key]
-
-	if !ok {
-		fmt.Println("value not found for the key ", key)
-	} else {
-		fmt.Printf("value for the key %s = %d\n", key, value)
+	st1 := Person{
+		name: "somename",
+		email: "someemail",
+		username: "someusername",
+		password: "somepassword",
 	}
 
-	fmt.Println(makeChess)	// new absent
+	st2 := st1
 
-	makeChess["new"] = 7	// adding to map
-	fmt.Println(makeChess)
+	st2.username = "hacked"
 
-	delete(makeChess, "new") // deleting from the map
-	fmt.Println(makeChess)
+	fmt.Println("st1.username = ", st1.username)
+	fmt.Println("st2.username = ", st2.username)
+	fmt.Println("st1.username = ", st1.username)
 
-	mapLength := len(makeChess)
-	fmt.Println("map length = ", mapLength)
+	p1 := person{name:"test",email:"test@test.com", username:"someuser",password:"123"}
 
-	copiedMap := makeChess
+	fmt.Println(p1.email)
+	p1.name = "owned"
+	fmt.Println(p1.name)
 
-	delete(copiedMap, "a2")	// will get deleted from the makeChess (parent) map too
+	greetRes := p1.greet()
+	fmt.Println(greetRes)
 
-	fmt.Println("makeChess = ", makeChess)
-	fmt.Println("copiedMap = ", copiedMap)
-	
-	// makeChess := make(map[string]int, 6)
-	// makeChess = map[string]int{
-	// 	"a1": 1,
-	// 	"b1": 2,
-	// 	"c1": 3,
-	// 	"c4": 4,
-	// 	"c5": 5,
-	// 	"c6": 6,
-	// 	"c7": 6,
-	// 	"c8": 6,
-	// 	"c9": 6,
-	// 	"c10": 6,
-	// }
-	// though overflowing the size works but
-	// An effective hashing function requires the size of the hash table to be at least twice the number of elements. Reserving the size beforehand preempts the program initialising a larger map to ensure hashing efficiency.
+	fmt.Println(strconv.Itoa(2))	// to string
+
+	fmt.Println(p1.own())
+
+	// no inheritence in go but composition
+	trex := deno{
+		extinct: extinct{
+			isExtinct: true,
+		},
+		carnivore: true,
+	}
+	fmt.Println("trex = ", trex)
 }

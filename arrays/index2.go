@@ -2,7 +2,10 @@ package main
 
 import "fmt"
 
-func main(){
+func index2(){
+
+	// arrays => size has to be known at the compile time
+
 	grades := [3]int{1, 2 ,3}		// array of 3 int 	
 	dynamicGrades := [...]int{1,2,3,4,5}	// dynamic size
 	fmt.Println(grades)

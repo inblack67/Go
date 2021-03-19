@@ -1,4 +1,4 @@
-package myroutines
+package goroutines
 
 import (
 	"fmt"
@@ -9,7 +9,9 @@ func greet(){
 	fmt.Println("hello worlds")
 }
 
-func main() {
+// go run --race main.go
+
+func main3() {
 	go greet()
 
 	var msg = "hello"

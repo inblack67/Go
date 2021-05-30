@@ -1,11 +1,12 @@
-package main
+package myio
 
-import "fmt"
+import (
+	"fmt"
+)
 
-func main (){
+func greet(){
 	var name string
 	fmt.Println("what is your name")
 	fmt.Scanln(&name)
 	fmt.Println("hello", name)
-
 }
